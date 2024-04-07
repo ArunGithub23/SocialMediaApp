@@ -5,6 +5,7 @@ const UserModel=require('../Models/userModel.js');
  const registerUser=async(req,res)=>{
 
     //console.log("body id",req.body)
+    console.log("useemodel is",UserModel)
 
 const {username,password,firstname,lastname}=req.body;
 const newUser=new UserModel({username,password,firstname,lastname});
