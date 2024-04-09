@@ -1,19 +1,21 @@
 const PostModel=require('../Models/postModel.js');
+const UserModel=require('../Models/userModel.js')
+const mongoose =require('mongoose')
 
 
 
 //create Post
  const createPost=async (req,res)=>{
-    console.log("okk1")
-    console.log("body",req.body)
+    console.log("createpost controller")
+   // console.log("body",req.body)
     
 
     const newPost=new PostModel(req.body);
     console.log("okk2")
 
     try {
-        await newPost.save()
-        res.status(200).json("post created")
+       const post= await newPost.save()
+        res.status(200).json(post)
     } catch (error) {
             res.status(500).json(error)   
     }
@@ -86,16 +88,17 @@ const deletePost=async(req,res)=>{
 const likePost=async(req,res)=>{
 
         const id=req.params.id
-        const {userId}=req.body
+        const {userid}=req.body
+
 
         try {
             
                 const post=await PostModel.findById(id)
-                if (!post.likes.includes(userId)) {
-                    await post.updateOne({$push:{likes:userId}})
+                if (!post.likes.includes(userid)) {
+                    await PostModel.updateOne({$push:{likes:userid}})
                      res.status(200).json("Post liked")   
                 } else {
-                    await post.updateOne({$pull:{likes:userId}})
+                    await post.updateOne({$pull:{likes:userid}})
                      res.status(200).json("Post unliked") 
                 }
 
@@ -104,4 +107,51 @@ const likePost=async(req,res)=>{
         }
 
 }
-module.exports={createPost,getPost,updatePost,deletePost}
+
+
+
+//getTimeLinePosts
+
+const getTimeLinePosts=async(req,res)=>{
+    
+
+    const userid=req.params.id
+    console.log("userid",userid)
+
+    try {
+        const currentUserPosts=await PostModel.find({userid:userid})
+       // console.log("posts are",currentUserPosts)
+        const followingPosts=await UserModel.aggregate([
+            {
+                $match:{
+                    _id:userid
+                }
+
+            },
+            {
+                $lookup:{
+                    from :"posts",
+                    localField:"following",
+                    foreignField:"userid",
+                    as:"followingPosts"
+                }
+            },
+            {
+                $project:{
+                    followingPosts:1,
+                    _id:0
+                }
+            }
+        ])
+
+       // console.log("follwingpost",followingPosts)
+
+        res.status(200).json(currentUserPosts)
+
+    } catch (error) {
+        console.log("catch",error)
+        res.status(500).json(error)
+    }
+
+}
+module.exports={createPost,getPost,updatePost,deletePost,likePost,getTimeLinePosts}
