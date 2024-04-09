@@ -146,7 +146,7 @@ const getTimeLinePosts=async(req,res)=>{
 
        // console.log("follwingpost",followingPosts)
 
-        res.status(200).json(currentUserPosts)
+        res.status(200).json(currentUserPosts.concat(followingPosts))
 
     } catch (error) {
         console.log("catch",error)

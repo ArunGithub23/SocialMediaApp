@@ -4,7 +4,10 @@ const dotenv=require('dotenv')
 const cors=require('cors')
 require('./Config/dbcon.js')  //connecction to database
 
+
 app.use(cors())
+
+//importing routes
 const AuthRoute=require('./Routes/AuthRoute.js');
 const UserRoute=require('./Routes/UserRoute.js');
 const PostRoute=require('./Routes/PostRoute.js')
@@ -13,6 +16,12 @@ app.use(express.json())
 
 dotenv.config();
 port=process.env.port;
+
+//to serve images for public
+
+app.use(express.static("public"))
+app.use("/images",express.static("images"))
+
 
 
 //calling route

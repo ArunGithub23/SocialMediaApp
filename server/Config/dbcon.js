@@ -14,7 +14,11 @@ class DatabaseCon{
     }
 
  _connect(){
-    mongoose.connect(Db_Url)
+    mongoose.connect(Db_Url, {
+        dbName: 'SocialMediaApp', // Specify the database name here
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      })
     .then(()=>{console.log("database connection succesful")})
     .catch((err)=>{
         console.log("err in database connection",err.message);
