@@ -9,6 +9,7 @@ import { getTimeLinePosts } from "../../actions/postAction";
 const Posts = () => {
   const params = useParams()
   const dispatch = useDispatch();
+  //destructuring user from authReducer
   const { user } = useSelector((state) => state.authReducer.authData);
   let { posts, loading } = useSelector((state) => state.postReducer);
 

@@ -5,7 +5,7 @@ import { UilPlayCircle } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { UilLocationPoint } from "@iconscout/react-unicons";
-import ProfileImage from "../../img/profileImg.jpg";
+//import ProfileImage from "../../img/profileImg.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { uploadImage, uploadPost } from "../../actions/uploadAction";
 
@@ -25,7 +25,7 @@ const PostShare = () => {
       console.log("okk",e.target.files[0]);
       let img = e.target.files[0];
       setImage(img);
-      console.log("img is ", image);
+     // console.log("img is ", image);
     }
 
     

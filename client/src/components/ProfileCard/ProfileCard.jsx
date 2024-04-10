@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 
 const ProfileCard = () => {
 
+    //destructuring user from authReducer
+
   const {user}=useSelector((state)=>state.authReducer.authData)
   const serverPublic=process.env.REACT_APP_PUBLIC_FOLDER
 
