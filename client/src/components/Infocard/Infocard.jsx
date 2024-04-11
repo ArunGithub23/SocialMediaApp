@@ -1,42 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Infocard.css";
-import { UilPen } from "@iconscout/react-unicons";
+
 import ProfileModal from "../ProfileModal/ProfileModal";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import * as UserApi from "../../Api/UserRequest";
+import { logout } from "../../actions/AuthAction";
+
 
 const Infocard = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  const profileUserId = params.id;
+  const [profileUser, setProfleUser] = useState({});
+  const { user } = useSelector((state) => state.authReducer.authData);
+
+  useEffect(() => {
+    const fetchProfileUser = async () => {
+      if (profileUserId === user.id) {
+        setProfleUser(user);
+      } else {
+        const profileUser = await UserApi.getUser(profileUserId);
+        setProfleUser(profileUser);
+      }
+    };
+
+    fetchProfileUser();
+  }, [user]);
+
+  //logout
+  const handleLogout=()=>{
+    dispatch(logout())
+  }
+
   return (
     <div className="InfoCard">
       <div className="infoHead">
-        <h4>Your Info </h4>
-        <UilPen
-          width="2rem"
-          height="1.2rem"
-         onClick={()=>{setModalOpened(true)}}
-        />
-        <ProfileModal modalOpened={modalOpened} setModalOpened={setModalOpened}/>
+        <h4>Profile Info </h4>
+       {user._id === profileUserId?<ProfileModal
+          modalOpened={modalOpened}
+          setModalOpened={setModalOpened}
+          data={profileUser}
+        />:""}
         
       </div>
       <div className="info">
         <span>
           <b>Status</b>
         </span>
-        <span>in RelationShip</span>
+        <span>{profileUser.relationship}</span>
       </div>
       <div className="info">
         <span>
           <b>Lives in</b>
         </span>
-        <span>Multan</span>
+        <span>{profileUser.livesin}</span>
       </div>
       <div className="info">
         <span>
-          <b>WOrks at</b>
+          <b>Works at</b>
         </span>
-        <span>india</span>
+        <span>{profileUser.worksAt}</span>
       </div>
-      <button className="button">Logout</button>
+      <button className="button" onClick={handleLogout}>Logout</button>
     </div>
   );
 };

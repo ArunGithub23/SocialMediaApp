@@ -18,6 +18,10 @@
                 return {...state,loading:false,error:true}
                 
                 break;
+
+                case 'LOG_OUT':
+                    localStorage.clear();
+                    return {...state,authData:null,loading:false,error:false}
         
             default:
                 return state
