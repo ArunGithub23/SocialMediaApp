@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+//base url
 const API=axios.create({baseURL:"https://socialmediaserver-dqlu.onrender.com"})
 
 export const uploadImage=(data)=>API.post('/upload',data)

@@ -24,6 +24,11 @@ export default function ProfileModal({ modalOpened, setModalOpened ,data}) {
   const handleClose = () => setOpen(false);
   console.log("modal is ", modalOpened);
 
+  const {password,...other}=data
+  const [formData,setformData]=React.useState(other)
+  const [profileImage,setProfileImage]=React.useState(null)
+  const [coverImage,setCoverImage]=React.useState(null)
+
 
 
 
@@ -55,23 +60,23 @@ export default function ProfileModal({ modalOpened, setModalOpened ,data}) {
           <form className="ProfileForm">
             <h2>Your Info</h2>
          <div className="">
-         <input type="text" placeholder="firstname"/>
-          <input type="text" placeholder="lasttname"/>
+         <input type="text" name="firstName" placeholder="firstname"/>
+          <input type="text"  name="lastName" placeholder="lasttname"/>
           
          </div>
          
-          <input type="text" placeholder="Works At"/>
+          <input type="text" name="worksAt" placeholder="Works At"/>
 
           <div className="">
-         <input type="text" placeholder="lives in"/>
-          <input type="text" placeholder="Country"/>
+         <input type="text" name="livesin" placeholder="lives in"/>
+          <input type="text" name="country" placeholder="Country"/>
           
          </div>
-         <input type="text" placeholder="Relationship status"/>
+         <input type="text" name="relationship" placeholder="Relationship status"/>
           
          <div className="">
-         Profile Image<input type="file" placeholder="Profile Image"/><br></br>
-         Cover Image <input type="file" placeholder="CCover Image"/>
+         Profile Image<input type="file" name="profileImage" placeholder="Profile Image"/><br></br>
+         Cover Image <input type="file" name="coverImage" placeholder="CCover Image"/>
           
          </div>
           </form>

@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+//base url
+
 const API=axios.create({baseURL:"https://socialmediaserver-dqlu.onrender.com"})
 
 export const logIn=(formdata)=>API.post('/auth/login',formdata)
